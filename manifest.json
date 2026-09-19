@@ -1,0 +1,12 @@
+{
+  "name": "WHC LEO CLUB ",
+  "short_name": "LEO CLUB",
+  "description": "Premium Leo Club Management App",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#070707",
+  "theme_color": "#d4af37",
+  "orientation": "portrait-primary",
+  "lang": "en"
+}
