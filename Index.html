@@ -1,112 +1,1536 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#070707">
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#0a0a0a">
-<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiTEVPIFdIQyBQcmVtaXVtIiwic2hvcnRfbmFtZSI6IkxFTyBXSEMiLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjMGEwYTBhIiwidGhlbWVfY29sb3IiOiIjZDRhZjM3In0=">
-<title>LEO WHC - Premium Luxury App</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LEO CLUB | Premium Dashboard</title>
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{background:#050505;color:#fff;font-family:'Poppins',sans-serif;overflow-x:hidden}
-.gold{color:#d4af37} .gold-gradient{background:linear-gradient(90deg,#d4af37,#f9e076,#d4af37);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-family:'Cinzel',serif;font-weight:800}
-.splash{position:fixed;inset:0;background:radial-gradient(circle at center,#1a1a0a,#000);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:0.8s}
-.card{background:linear-gradient(145deg,#151515,#0a0a0a);border:1px solid rgba(212,175,55,0.3);border-radius:22px;padding:18px;margin:14px;box-shadow:0 10px 40px rgba(0,0,0,0.8), inset 0 1px 0 rgba(212,175,55,0.2)}
-.btn-gold{background:linear-gradient(90deg,#d4af37,#f9e076);color:#000;border:none;padding:14px;border-radius:14px;font-weight:700;width:100%;font-family:'Cinzel';letter-spacing:1px}
-.nav{position:fixed;bottom:15px;left:15px;right:15px;background:rgba(15,15,15,0.95);backdrop-filter:blur(20px);border:1px solid rgba(212,175,55,0.3);border-radius:25px;display:flex;justify-content:space-around;padding:12px 5px;z-index:100}
-.nav-item{color:#666;text-align:center;font-size:10px;flex:1} .nav-item.active{color:#d4af37}
-.screen{display:none;min-height:100vh;padding:20px 15px 110px;animation:fade 0.4s} .screen.active{display:block}
-@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.input{background:#121212;border:1px solid #333;border-radius:12px;padding:14px;width:100%;color:#fff;margin:8px 0}
-.badge{background:#d4af37;color:#000;font-size:10px;padding:4px 10px;border-radius:20px;font-weight:700}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap');
+
+:root{
+    --bg:#070707;
+    --bg2:#0d0d0d;
+    --card:#111111;
+    --card2:#151515;
+    --gold:#d4af37;
+    --gold2:#f4d77b;
+    --text:#ffffff;
+    --muted:#9b9b9b;
+    --border:rgba(212,175,55,.18);
+    --sidebar:250px;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:'Inter',sans-serif;
+    background:
+        radial-gradient(circle at 80% 10%,rgba(212,175,55,.10),transparent 25%),
+        radial-gradient(circle at 20% 90%,rgba(212,175,55,.06),transparent 25%),
+        var(--bg);
+    color:var(--text);
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+/* ================= PRELOADER ================= */
+
+#loader{
+    position:fixed;
+    inset:0;
+    background:#050505;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+    transition:.7s ease;
+}
+
+.loader-box{
+    text-align:center;
+}
+
+.loader-logo{
+    width:85px;
+    height:85px;
+    border:2px solid var(--gold);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:38px;
+    margin:auto;
+    box-shadow:0 0 35px rgba(212,175,55,.3);
+    animation:pulse 1.6s infinite;
+}
+
+.loader-title{
+    margin-top:20px;
+    font-family:'Playfair Display',serif;
+    letter-spacing:5px;
+    color:var(--gold2);
+}
+
+.loader-line{
+    width:180px;
+    height:2px;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+    margin:15px auto;
+    animation:loading 1.4s infinite;
+}
+
+@keyframes loading{
+    0%{transform:scaleX(.2);opacity:.2}
+    50%{transform:scaleX(1);opacity:1}
+    100%{transform:scaleX(.2);opacity:.2}
+}
+
+@keyframes pulse{
+    50%{transform:scale(1.06);box-shadow:0 0 50px rgba(212,175,55,.5)}
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:var(--sidebar);
+    height:100vh;
+    background:rgba(9,9,9,.94);
+    backdrop-filter:blur(20px);
+    border-right:1px solid var(--border);
+    padding:28px 18px;
+    z-index:1000;
+    transition:.4s ease;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:5px 10px 30px;
+}
+
+.brand-logo{
+    width:44px;
+    height:44px;
+    border:1px solid var(--gold);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    box-shadow:0 0 20px rgba(212,175,55,.2);
+}
+
+.brand-text h2{
+    font-family:'Playfair Display',serif;
+    color:var(--gold2);
+    letter-spacing:2px;
+    font-size:19px;
+}
+
+.brand-text span{
+    color:#777;
+    font-size:9px;
+    letter-spacing:2px;
+}
+
+.nav-title{
+    color:#555;
+    font-size:10px;
+    letter-spacing:2px;
+    padding:12px 12px;
+}
+
+.nav{
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+}
+
+.nav button{
+    border:0;
+    background:transparent;
+    color:#aaa;
+    padding:13px 14px;
+    border-radius:12px;
+    text-align:left;
+    font-size:14px;
+    cursor:pointer;
+    transition:.3s;
+    display:flex;
+    align-items:center;
+    gap:13px;
+}
+
+.nav button:hover,
+.nav button.active{
+    color:var(--gold2);
+    background:linear-gradient(90deg,rgba(212,175,55,.15),transparent);
+    transform:translateX(4px);
+}
+
+.nav-icon{
+    width:22px;
+    text-align:center;
+    font-size:17px;
+}
+
+.sidebar-bottom{
+    position:absolute;
+    left:18px;
+    right:18px;
+    bottom:20px;
+}
+
+.profile-mini{
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:12px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:rgba(255,255,255,.02);
+}
+
+.avatar{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#222,var(--gold));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#111;
+    font-weight:800;
+}
+
+.profile-mini small{
+    color:#666;
+    font-size:10px;
+}
+
+.profile-mini strong{
+    font-size:12px;
+}
+
+/* ================= MAIN ================= */
+
+.main{
+    margin-left:var(--sidebar);
+    min-height:100vh;
+    padding:25px 35px 50px;
+}
+
+.topbar{
+    height:65px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.mobile-menu{
+    display:none;
+    border:1px solid var(--border);
+    background:#111;
+    color:var(--gold2);
+    width:43px;
+    height:43px;
+    border-radius:12px;
+    font-size:20px;
+}
+
+.page-heading h1{
+    font-family:'Playfair Display',serif;
+    font-size:28px;
+}
+
+.page-heading p{
+    color:#777;
+    font-size:12px;
+    margin-top:4px;
+}
+
+.top-actions{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.icon-btn{
+    width:43px;
+    height:43px;
+    border-radius:12px;
+    border:1px solid var(--border);
+    background:#111;
+    color:#ddd;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.icon-btn:hover{
+    color:var(--gold2);
+    border-color:var(--gold);
+    transform:translateY(-2px);
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    min-height:245px;
+    border:1px solid var(--border);
+    border-radius:24px;
+    padding:35px;
+    position:relative;
+    overflow:hidden;
+    background:
+        linear-gradient(120deg,rgba(212,175,55,.13),transparent 45%),
+        linear-gradient(90deg,#111,#0a0a0a);
+    box-shadow:0 20px 60px rgba(0,0,0,.3);
+}
+
+.hero:after{
+    content:"🦁";
+    position:absolute;
+    right:35px;
+    top:20px;
+    font-size:170px;
+    opacity:.045;
+    transform:rotate(-8deg);
+}
+
+.hero-tag{
+    display:inline-block;
+    color:var(--gold2);
+    font-size:10px;
+    letter-spacing:3px;
+    border:1px solid var(--border);
+    padding:7px 12px;
+    border-radius:50px;
+    margin-bottom:17px;
+}
+
+.hero h2{
+    font-family:'Playfair Display',serif;
+    font-size:42px;
+    max-width:650px;
+    line-height:1.1;
+}
+
+.hero h2 span{
+    color:var(--gold2);
+}
+
+.hero p{
+    color:#888;
+    max-width:570px;
+    line-height:1.7;
+    font-size:13px;
+    margin:15px 0 22px;
+}
+
+.gold-btn{
+    border:0;
+    background:linear-gradient(135deg,var(--gold2),var(--gold));
+    color:#111;
+    padding:12px 20px;
+    border-radius:10px;
+    font-weight:800;
+    cursor:pointer;
+    transition:.3s;
+    box-shadow:0 10px 25px rgba(212,175,55,.15);
+}
+
+.gold-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 15px 35px rgba(212,175,55,.25);
+}
+
+/* ================= SECTION ================= */
+
+.section{
+    margin-top:28px;
+}
+
+.section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:14px;
+}
+
+.section-head h3{
+    font-size:17px;
+}
+
+.section-head span{
+    color:#666;
+    font-size:11px;
+}
+
+/* ================= STATS ================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.stat-card{
+    border:1px solid var(--border);
+    background:linear-gradient(145deg,#121212,#0c0c0c);
+    border-radius:18px;
+    padding:20px;
+    transition:.35s;
+    position:relative;
+    overflow:hidden;
+}
+
+.stat-card:before{
+    content:"";
+    position:absolute;
+    width:80px;
+    height:80px;
+    right:-35px;
+    top:-35px;
+    background:var(--gold);
+    opacity:.05;
+    border-radius:50%;
+}
+
+.stat-card:hover{
+    transform:translateY(-5px);
+    border-color:rgba(212,175,55,.45);
+}
+
+.stat-icon{
+    font-size:22px;
+    margin-bottom:15px;
+}
+
+.stat-card p{
+    color:#777;
+    font-size:11px;
+}
+
+.stat-card h2{
+    margin-top:5px;
+    font-size:28px;
+    color:var(--gold2);
+}
+
+/* ================= CONTENT GRID ================= */
+
+.content-grid{
+    display:grid;
+    grid-template-columns:1.4fr 1fr;
+    gap:18px;
+}
+
+.card{
+    background:linear-gradient(145deg,#121212,#0d0d0d);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:22px;
+    transition:.3s;
+}
+
+.card:hover{
+    border-color:rgba(212,175,55,.35);
+}
+
+.event{
+    display:flex;
+    gap:15px;
+    align-items:center;
+    padding:14px 0;
+    border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.event:last-child{
+    border-bottom:0;
+}
+
+.date-box{
+    width:55px;
+    height:55px;
+    border:1px solid var(--border);
+    border-radius:13px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    color:var(--gold2);
+}
+
+.date-box strong{
+    font-size:19px;
+}
+
+.date-box small{
+    font-size:8px;
+    color:#777;
+}
+
+.event-info{
+    flex:1;
+}
+
+.event-info strong{
+    font-size:13px;
+}
+
+.event-info p{
+    color:#666;
+    font-size:10px;
+    margin-top:5px;
+}
+
+.status{
+    font-size:9px;
+    padding:6px 9px;
+    border-radius:50px;
+    background:rgba(212,175,55,.1);
+    color:var(--gold2);
+}
+
+/* ================= PROJECT ================= */
+
+.project{
+    padding:14px 0;
+}
+
+.project-top{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:8px;
+}
+
+.project-top strong{
+    font-size:12px;
+}
+
+.project-top span{
+    font-size:10px;
+    color:var(--gold2);
+}
+
+.progress{
+    width:100%;
+    height:6px;
+    background:#222;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress div{
+    height:100%;
+    background:linear-gradient(90deg,var(--gold),var(--gold2));
+    border-radius:20px;
+}
+
+/* ================= QUICK ACTIONS ================= */
+
+.quick-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+}
+
+.quick{
+    border:1px solid var(--border);
+    background:#111;
+    padding:18px 10px;
+    border-radius:15px;
+    text-align:center;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.quick:hover{
+    transform:translateY(-4px);
+    background:rgba(212,175,55,.07);
+    border-color:var(--gold);
+}
+
+.quick div{
+    font-size:23px;
+    margin-bottom:7px;
+}
+
+.quick span{
+    color:#888;
+    font-size:10px;
+}
+
+/* ================= MEMBERS ================= */
+
+.members{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+
+.member{
+    padding:15px;
+    border:1px solid var(--border);
+    border-radius:15px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.member .avatar{
+    width:42px;
+    height:42px;
+}
+
+.member-info strong{
+    font-size:12px;
+}
+
+.member-info p{
+    color:#666;
+    font-size:9px;
+    margin-top:4px;
+}
+
+/* ================= PAGES ================= */
+
+.page{
+    display:none;
+    animation:pageIn .5s ease;
+}
+
+.page.active{
+    display:block;
+}
+
+@keyframes pageIn{
+    from{opacity:0;transform:translateY(10px)}
+    to{opacity:1;transform:translateY(0)}
+}
+
+.simple-page{
+    min-height:500px;
+}
+
+.simple-page .card{
+    margin-top:20px;
+}
+
+.feature-list{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-top:20px;
+}
+
+.feature{
+    padding:25px;
+    border:1px solid var(--border);
+    border-radius:18px;
+    background:#101010;
+}
+
+.feature-icon{
+    font-size:30px;
+    margin-bottom:15px;
+}
+
+.feature h3{
+    margin-bottom:8px;
+    font-size:15px;
+}
+
+.feature p{
+    color:#777;
+    font-size:11px;
+    line-height:1.6;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+    text-align:center;
+    color:#444;
+    font-size:10px;
+    margin-top:45px;
+    letter-spacing:1px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1000px){
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .content-grid{
+        grid-template-columns:1fr;
+    }
+
+    .feature-list{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:760px){
+
+    :root{
+        --sidebar:0px;
+    }
+
+    .sidebar{
+        width:270px;
+        transform:translateX(-100%);
+        box-shadow:20px 0 50px rgba(0,0,0,.5);
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .main{
+        margin-left:0;
+        padding:18px;
+    }
+
+    .mobile-menu{
+        display:block;
+    }
+
+    .topbar{
+        gap:10px;
+    }
+
+    .page-heading{
+        flex:1;
+    }
+
+    .page-heading h1{
+        font-size:20px;
+    }
+
+    .hero{
+        padding:25px;
+    }
+
+    .hero h2{
+        font-size:31px;
+    }
+
+    .hero:after{
+        font-size:100px;
+        right:10px;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .quick-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .members{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:480px){
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .feature-list{
+        grid-template-columns:1fr;
+    }
+
+    .top-actions .icon-btn:first-child{
+        display:none;
+    }
+
+    .hero h2{
+        font-size:27px;
+    }
+
+    .hero p{
+        font-size:11px;
+    }
+}
 </style>
 </head>
+
 <body>
 
-<!-- SPLASH -->
-<div id="splash" class="splash" onclick="this.style.opacity=0;setTimeout(()=>this.remove(),800)">
-<div style="width:110px;height:110px;background:linear-gradient(145deg,#d4af37,#f9e076);border-radius:30px;display:flex;align-items:center;justify-content:center;font-family:'Cinzel';font-size:42px;color:#000;font-weight:800;box-shadow:0 0 60px rgba(212,175,55,0.5)">L</div>
-<h1 class="gold-gradient" style="font-size:36px;margin-top:20px">LEO WHC</h1>
-<p style="color:#888;letter-spacing:4px;font-size:10px;margin-top:5px">WORLD HUMANITARIAN CHAPTER</p>
-<p style="color:#d4af3733;font-size:9px;margin-top:80px;letter-spacing:3px">EST. 2025 • PREMIUM EDITION</p>
+<!-- LOADER -->
+<div id="loader">
+    <div class="loader-box">
+        <div class="loader-logo">🦁</div>
+        <div class="loader-title">LEO CLUB</div>
+        <div class="loader-line"></div>
+    </div>
 </div>
 
-<!-- HOME -->
-<div id="home" class="screen active">
-<div style="display:flex;justify-content:space-between;align-items:center">
-<h2 class="gold-gradient" style="font-size:22px">LEO WHC</h2><div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(90deg,#d4af37,#f9e076);display:flex;align-items:center;justify-content:center;color:#000;font-weight:800">A</div>
-</div>
-<p style="font-family:'Cinzel';font-size:20px;margin-top:18px">Good Evening, Alex</p><p style="color:#777;font-size:12px">Welcome back to Premium Club</p>
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
 
-<div class="card" style="background:linear-gradient(135deg,#1a1a0a,#121212);margin-top:20px;border:1px solid #d4af37">
-<div style="display:flex;justify-content:space-between"><span class="badge">LIVE</span><span style="color:#d4af37">👑</span></div>
-<p style="font-family:'Cinzel';margin-top:10px">Annual Charity Gala 2025</p><p style="color:#888;font-size:12px">Dec 12 • Downtown Ballroom • 6:30 PM</p>
-<div style="display:flex;gap:10px;margin-top:12px"><button class="btn-gold" style="flex:1;padding:8px;font-size:12px" onclick="show('events')">View Details →</button><div style="background:#222;border-radius:10px;padding:8px 12px;font-size:12px">📍 1.2km</div></div>
-</div>
+    <div class="brand">
+        <div class="brand-logo">🦁</div>
+        <div class="brand-text">
+            <h2>LEO CLUB</h2>
+            <span>PREMIUM MANAGEMENT</span>
+        </div>
+    </div>
 
-<div style="display:flex;gap:10px">
-<div class="card" style="flex:1;text-align:center"><p style="color:#888;font-size:10px">SERVICE HOURS</p><h2 class="gold-gradient" style="font-size:28px">128</h2><p style="color:#555;font-size:10px">+12 this month</p></div>
-<div class="card" style="flex:1;text-align:center"><p style="color:#888;font-size:10px">DONATIONS</p><h2 class="gold-gradient" style="font-size:28px">$2.4k</h2><p style="color:#2ecc71;font-size:10px">↑ 18%</p></div>
-</div>
+    <div class="nav-title">MAIN MENU</div>
 
-<div class="card"><p style="font-family:'Cinzel';font-size:14px">⭐ Premium Stats</p><div style="display:flex;justify-content:space-between;margin-top:12px;text-align:center"><div><b>8</b><p style="color:#777;font-size:10px">New Members</p></div><div><b>5</b><p style="color:#777;font-size:10px">Projects</p></div><div><b>42</b><p style="color:#777;font-size:10px">Events Done</p></div></div></div>
-</div>
+    <nav class="nav">
 
-<!-- MEMBERS -->
-<div id="members" class="screen">
-<h1 class="gold-gradient" style="text-align:center;font-size:26px">Members</h1><p style="text-align:center;color:#777;font-size:12px">128 Active Premium Members</p>
-<input class="input" placeholder="🔍 Search members..." onkeyup="searchM(this.value)">
-<div style="display:flex;gap:8px;margin:10px 0"><span class="badge">All</span><span style="border:1px solid #333;padding:4px 10px;border-radius:20px;font-size:10px">Board</span><span style="border:1px solid #333;padding:4px 10px;border-radius:20px;font-size:10px">Volunteer</span></div>
-<div id="memberList">
-<div class="card" style="display:flex;gap:12px;align-items:center"><div style="width:45px;height:45px;border-radius:50%;border:1px solid #d4af37;display:flex;align-items:center;justify-content:center">JD</div><div style="flex:1"><b style="font-size:14px">Jordan Davis</b><p style="color:#888;font-size:11px">Club President • Board 👑</p></div><span class="gold">›</span></div>
-<div class="card" style="display:flex;gap:12px;align-items:center"><div style="width:45px;height:45px;border-radius:50%;border:1px solid #d4af37;display:flex;align-items:center;justify-content:center">SK</div><div style="flex:1"><b style="font-size:14px">Sofia Kim</b><p style="color:#888;font-size:11px">Treasurer • Board</p></div><span class="gold">›</span></div>
-<div class="card" style="display:flex;gap:12px;align-items:center"><div style="width:45px;height:45px;border-radius:50%;border:1px solid #d4af37;display:flex;align-items:center;justify-content:center">ML</div><div style="flex:1"><b style="font-size:14px">Marcus Lee</b><p style="color:#888;font-size:11px">Service Coordinator • 42 hrs</p></div><span class="gold">›</span></div>
-</div>
-<button class="btn-gold" onclick="addMember()">+ Add Member</button>
-</div>
+        <button class="active" onclick="showPage('dashboard',this)">
+            <span class="nav-icon">⌂</span>
+            Dashboard
+        </button>
 
-<!-- EVENTS -->
-<div id="events" class="screen">
-<h1 class="gold-gradient" style="text-align:center">Premium Events</h1>
-<div class="card"><img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=500" style="width:100%;border-radius:12px;height:140px;object-fit:cover"><h3 style="font-family:'Cinzel';margin-top:10px">Charity Gala Night</h3><p style="color:#888;font-size:11px;margin:5px 0">📅 Dec 12, 2025 | 📍 Grand Ballroom</p><button class="btn-gold" style="margin-top:10px" onclick="alert('Ticket Reserved! 👑')">Reserve Seat - $150</button></div>
-<div class="card"><h3>Beach Cleanup Project</h3><p style="color:#888;font-size:11px">Jan 5, 2026 | 20 Members Joined</p><div style="background:#111;height:6px;border-radius:10px;margin-top:10px"><div style="width:70%;height:100%;background:#d4af37;border-radius:10px"></div></div></div>
-</div>
+        <button onclick="showPage('events',this)">
+            <span class="nav-icon">◷</span>
+            Events
+        </button>
 
-<!-- DONATE -->
-<div id="donate" class="screen">
-<h1 class="gold-gradient" style="text-align:center">Donate</h1>
-<div class="card" style="text-align:center"><p style="color:#888">Total Raised</p><h1 class="gold-gradient" style="font-size:40px">$24,820</h1><p style="color:#2ecc71">Goal $30k - 82% Reached</p></div>
-<div style="display:flex;gap:10px;margin:10px 14px"><button class="card" style="flex:1;text-align:center" onclick="donate(25)">$25</button><button class="card" style="flex:1;text-align:center;background:#d4af37;color:#000">$50</button><button class="card" style="flex:1;text-align:center">$100</button></div>
-<input class="input" placeholder="Custom Amount $" id="amt"><button class="btn-gold" onclick="donate(document.getElementById('amt').value)">Donate Now 👑</button>
-</div>
+        <button onclick="showPage('projects',this)">
+            <span class="nav-icon">◆</span>
+            Projects
+        </button>
 
-<!-- PROFILE -->
-<div id="profile" class="screen">
-<div style="text-align:center;margin-top:20px"><div style="width:80px;height:80px;margin:0 auto;border-radius:50%;background:linear-gradient(90deg,#d4af37,#f9e076);display:flex;align-items:center;justify-content:center;font-size:32px;color:#000;font-weight:800">A</div><h2 style="font-family:'Cinzel';margin-top:10px">Alex Perera</h2><p style="color:#888">Premium Member • ID: WHC-128</p><span class="badge" style="margin-top:10px;display:inline-block">👑 LUXURY MEMBER</span></div>
-<div class="card" style="margin-top:20px"><p>📧 alex@leowhc.com</p><p style="margin-top:8px">📞 +94 77 123 4567</p><p style="margin-top:8px">🏆 128 Service Hours</p></div>
-<button class="btn-gold" style="background:transparent;border:1px solid #d4af37;color:#d4af37;margin-top:10px">Logout</button>
-</div>
+        <button onclick="showPage('members',this)">
+            <span class="nav-icon">♟</span>
+            Members
+        </button>
 
-<div class="nav">
-<div class="nav-item active" onclick="show('home',this)">🏠<br>Home</div>
-<div class="nav-item" onclick="show('members',this)">👥<br>Members</div>
-<div class="nav-item" onclick="show('events',this)">🎉<br>Events</div>
-<div class="nav-item" onclick="show('donate',this)">💰<br>Donate</div>
-<div class="nav-item" onclick="show('profile',this)">👤<br>Profile</div>
-</div>
+        <button onclick="showPage('awards',this)">
+            <span class="nav-icon">★</span>
+            Awards
+        </button>
+
+        <button onclick="showPage('gallery',this)">
+            <span class="nav-icon">▣</span>
+            Gallery
+        </button>
+
+        <button onclick="showPage('news',this)">
+            <span class="nav-icon">◉</span>
+            Announcements
+        </button>
+
+    </nav>
+
+    <div class="nav-title">SYSTEM</div>
+
+    <nav class="nav">
+        <button onclick="showPage('settings',this)">
+            <span class="nav-icon">⚙</span>
+            Settings
+        </button>
+    </nav>
+
+    <div class="sidebar-bottom">
+        <div class="profile-mini">
+            <div class="avatar">L</div>
+            <div>
+                <strong>Leo Member</strong><br>
+                <small>ACTIVE MEMBER</small>
+            </div>
+        </div>
+    </div>
+
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+    <div class="topbar">
+
+        <button class="mobile-menu" onclick="toggleSidebar()">☰</button>
+
+        <div class="page-heading">
+            <h1 id="pageTitle">Dashboard</h1>
+            <p>Welcome to your Leo Club management space.</p>
+        </div>
+
+        <div class="top-actions">
+            <button class="icon-btn" onclick="notify()">🔔</button>
+            <button class="icon-btn" onclick="toggleTheme()">◐</button>
+        </div>
+
+    </div>
+
+    <!-- DASHBOARD -->
+    <section class="page active" id="dashboard">
+
+        <div class="hero">
+
+            <div class="hero-tag">LEADERSHIP • EXPERIENCE • OPPORTUNITY</div>
+
+            <h2>
+                Welcome to
+                <span>Leo Club</span>
+            </h2>
+
+            <p>
+                A premium digital space to manage your club,
+                connect members, organize service projects and
+                celebrate your achievements.
+            </p>
+
+            <button class="gold-btn" onclick="showPageByName('events')">
+                Explore Events →
+            </button>
+
+        </div>
+
+        <div class="section">
+
+            <div class="section-head">
+                <h3>Club Overview</h3>
+                <span>LIVE DATA</span>
+            </div>
+
+            <div class="stats">
+
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <p>Total Members</p>
+                    <h2>45</h2>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">📅</div>
+                    <p>Upcoming Events</p>
+                    <h2>12</h2>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">🤝</div>
+                    <p>Service Projects</p>
+                    <h2>08</h2>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">🏆</div>
+                    <p>Achievements</p>
+                    <h2>24</h2>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="section">
+
+            <div class="content-grid">
+
+                <div class="card">
+
+                    <div class="section-head">
+                        <h3>Upcoming Events</h3>
+                        <span>VIEW ALL</span>
+                    </div>
+
+                    <div class="event">
+                        <div class="date-box">
+                            <strong>21</strong>
+                            <small>SEP</small>
+                        </div>
+
+                        <div class="event-info">
+                            <strong>Leo Monthly Meeting</strong>
+                            <p>Club Hall • 3:00 PM</p>
+                        </div>
+
+                        <span class="status">UPCOMING</span>
+                    </div>
+
+                    <div class="event">
+                        <div class="date-box">
+                            <strong>28</strong>
+                            <small>SEP</small>
+                        </div>
+
+                        <div class="event-info">
+                            <strong>Community Service Day</strong>
+                            <p>Community Center • 8:00 AM</p>
+                        </div>
+
+                        <span class="status">SERVICE</span>
+                    </div>
+
+                    <div class="event">
+                        <div class="date-box">
+                            <strong>05</strong>
+                            <small>OCT</small>
+                        </div>
+
+                        <div class="event-info">
+                            <strong>Leadership Workshop</strong>
+                            <p>School Auditorium • 10:00 AM</p>
+                        </div>
+
+                        <span class="status">EVENT</span>
+                    </div>
+
+                </div>
+
+                <div class="card">
+
+                    <div class="section-head">
+                        <h3>Project Progress</h3>
+                        <span>2026</span>
+                    </div>
+
+                    <div class="project">
+
+                        <div class="project-top">
+                            <strong>Green Future</strong>
+                            <span>82%</span>
+                        </div>
+
+                        <div class="progress">
+                            <div style="width:82%"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="project">
+
+                        <div class="project-top">
+                            <strong>Community Care</strong>
+                            <span>65%</span>
+                        </div>
+
+                        <div class="progress">
+                            <div style="width:65%"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="project">
+
+                        <div class="project-top">
+                            <strong>Education Support</strong>
+                            <span>48%</span>
+                        </div>
+
+                        <div class="progress">
+                            <div style="width:48%"></div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="section">
+
+            <div class="section-head">
+                <h3>Quick Actions</h3>
+            </div>
+
+            <div class="quick-grid">
+
+                <div class="quick" onclick="showPageByName('events')">
+                    <div>📅</div>
+                    <span>View Events</span>
+                </div>
+
+                <div class="quick" onclick="showPageByName('projects')">
+                    <div>🤝</div>
+                    <span>Projects</span>
+                </div>
+
+                <div class="quick" onclick="showPageByName('members')">
+                    <div>👥</div>
+                    <span>Members</span>
+                </div>
+
+                <div class="quick" onclick="showPageByName('gallery')">
+                    <div>🖼</div>
+                    <span>Gallery</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- EVENTS -->
+    <section class="page simple-page" id="events">
+
+        <div class="card">
+
+            <div class="section-head">
+                <h3>Club Events</h3>
+                <span>2026</span>
+            </div>
+
+            <div class="event">
+                <div class="date-box">
+                    <strong>21</strong>
+                    <small>SEP</small>
+                </div>
+                <div class="event-info">
+                    <strong>Leo Monthly Meeting</strong>
+                    <p>Club Hall • 3:00 PM</p>
+                </div>
+                <span class="status">UPCOMING</span>
+            </div>
+
+            <div class="event">
+                <div class="date-box">
+                    <strong>28</strong>
+                    <small>SEP</small>
+                </div>
+                <div class="event-info">
+                    <strong>Community Service Day</strong>
+                    <p>Community Center • 8:00 AM</p>
+                </div>
+                <span class="status">SERVICE</span>
+            </div>
+
+            <div class="event">
+                <div class="date-box">
+                    <strong>05</strong>
+                    <small>OCT</small>
+                </div>
+                <div class="event-info">
+                    <strong>Leadership Workshop</strong>
+                    <p>School Auditorium • 10:00 AM</p>
+                </div>
+                <span class="status">EVENT</span>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="page simple-page" id="projects">
+
+        <div class="card">
+            <div class="section-head">
+                <h3>Service Projects</h3>
+                <span>ACTIVE PROJECTS</span>
+            </div>
+
+            <div class="project">
+                <div class="project-top">
+                    <strong>Green Future</strong>
+                    <span>82%</span>
+                </div>
+                <div class="progress">
+                    <div style="width:82%"></div>
+                </div>
+            </div>
+
+            <div class="project">
+                <div class="project-top">
+                    <strong>Community Care</strong>
+                    <span>65%</span>
+                </div>
+                <div class="progress">
+                    <div style="width:65%"></div>
+                </div>
+            </div>
+
+            <div class="project">
+                <div class="project-top">
+                    <strong>Education Support</strong>
+                    <span>48%</span>
+                </div>
+                <div class="progress">
+                    <div style="width:48%"></div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- MEMBERS -->
+    <section class="page simple-page" id="members">
+
+        <div class="card">
+
+            <div class="section-head">
+                <h3>Leo Members</h3>
+                <span>45 MEMBERS</span>
+            </div>
+
+            <div class="members">
+
+                <div class="member">
+                    <div class="avatar">A</div>
+                    <div class="member-info">
+                        <strong>Alex</strong>
+                        <p>President</p>
+                    </div>
+                </div>
+
+                <div class="member">
+                    <div class="avatar">D</div>
+                    <div class="member-info">
+                        <strong>Daniel</strong>
+                        <p>Secretary</p>
+                    </div>
+                </div>
+
+                <div class="member">
+                    <div class="avatar">S</div>
+                    <div class="member-info">
+                        <strong>Sarah</strong>
+                        <p>Treasurer</p>
+                    </div>
+                </div>
+
+                <div class="member">
+                    <div class="avatar">M</div>
+                    <div class="member-info">
+                        <strong>Michael</strong>
+                        <p>Member</p>
+                    </div>
+                </div>
+
+                <div class="member">
+                    <div class="avatar">N</div>
+                    <div class="member-info">
+                        <strong>Nina</strong>
+                        <p>Member</p>
+                    </div>
+                </div>
+
+                <div class="member">
+                    <div class="avatar">K</div>
+                    <div class="member-info">
+                        <strong>Kevin</strong>
+                        <p>Member</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- AWARDS -->
+    <section class="page simple-page" id="awards">
+
+        <div class="card">
+
+            <div class="section-head">
+                <h3>Achievements & Awards</h3>
+                <span>CLUB MILESTONES</span>
+            </div>
+
+            <div class="feature-list">
+
+                <div class="feature">
+                    <div class="feature-icon">🏆</div>
+                    <h3>Service Excellence</h3>
+                    <p>Recognition for successful community service activities.</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">⭐</div>
+                    <h3>Leadership</h3>
+                    <p>Celebrating leadership development and participation.</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">🌱</div>
+                    <h3>Green Future</h3>
+                    <p>Environmental awareness and sustainability projects.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- GALLERY -->
+    <section class="page simple-page" id="gallery">
+
+        <div class="card">
+
+            <div class="section-head">
+                <h3>Club Gallery</h3>
+                <span>MEMORIES</span>
+            </div>
+
+            <div class="feature-list">
+
+                <div class="feature">
+                    <div class="feature-icon">📸</div>
+                    <h3>Service Day</h3>
+                    <p>Community service memories.</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">🌳</div>
+                    <h3>Environment Project</h3>
+                    <p>Our green future activities.</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">🎓</div>
+                    <h3>Leadership Program</h3>
+                    <p>Learning and leadership experiences.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- NEWS -->
+    <section class="page simple-page" id="news">
+
+        <div class="card">
+
+            <div class="section-head">
+                <h3>Announcements</h3>
+                <span>LATEST NEWS</span>
+            </div>
+
+            <div class="event">
+                <div class="date-box">📢</div>
+                <div class="event-info">
+                    <strong>Monthly meeting announced</strong>
+                    <p>New club meeting details are available.</p>
+                </div>
+            </div>
+
+            <div class="event">
+                <div class="date-box">🌱</div>
+                <div class="event-info">
+                    <strong>Green Future project</strong>
+                    <p>Project activities are currently in progress.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- SETTINGS -->
+    <section class="page simple-page" id="settings">
+
+        <div class="card">
+
+            <div class="section-head">
+                <h3>Settings</h3>
+                <span>APP SETTINGS</span>
+            </div>
+
+            <div class="feature-list">
+
+                <div class="feature" onclick="toggleTheme()">
+                    <div class="feature-icon">◐</div>
+                    <h3>Theme</h3>
+                    <p>Switch the application appearance.</p>
+                </div>
+
+                <div class="feature" onclick="notify()">
+                    <div class="feature-icon">🔔</div>
+                    <h3>Notifications</h3>
+                    <p>Manage club notification preferences.</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">🔐</div>
+                    <h3>Security</h3>
+                    <p>Account and security settings.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <footer>
+        © 2026 LEO CLUB • PREMIUM CLUB MANAGEMENT
+    </footer>
+
+</main>
 
 <script>
-function show(id,el){
-document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-document.getElementById(id).classList.add('active');
-if(el){document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));el.classList.add('active')}
-window.scrollTo(0,0);
+
+/* ================= LOADER ================= */
+
+window.addEventListener("load",function(){
+
+    setTimeout(function(){
+
+        document.getElementById("loader").style.opacity="0";
+
+        setTimeout(function(){
+            document.getElementById("loader").style.display="none";
+        },700);
+
+    },1000);
+
+});
+
+
+/* ================= NAVIGATION ================= */
+
+const titles={
+    dashboard:"Dashboard",
+    events:"Events",
+    projects:"Projects",
+    members:"Members",
+    awards:"Awards",
+    gallery:"Gallery",
+    news:"Announcements",
+    settings:"Settings"
+};
+
+function showPage(page,button){
+
+    document.querySelectorAll(".page").forEach(function(p){
+        p.classList.remove("active");
+    });
+
+    document.getElementById(page).classList.add("active");
+
+    document.querySelectorAll(".nav button").forEach(function(b){
+        b.classList.remove("active");
+    });
+
+    if(button){
+        button.classList.add("active");
+    }
+
+    document.getElementById("pageTitle").textContent=titles[page];
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+    if(window.innerWidth<=760){
+        document.getElementById("sidebar").classList.remove("open");
+    }
 }
-function donate(a){if(!a)return alert('Enter amount!');alert('Thank you! $'+a+' Donated Successfully! 👑💛');}
-function addMember(){let n=prompt('Member Name?');if(n){let d=document.createElement('div');d.className='card';d.style.display='flex';d.style.gap='12px';d.style.alignItems='center';d.innerHTML=`<div style="width:45px;height:45px;border-radius:50%;border:1px solid #d4af37;display:flex;align-items:center;justify-content:center">${n[0]}</div><div style="flex:1"><b>${n}</b><p style="color:#888;font-size:11px">New Member • Just Added</p></div>`;document.getElementById('memberList').prepend(d)}}
-function searchM(v){document.querySelectorAll('#memberList .card').forEach(c=>{c.style.display=c.innerText.toLowerCase().includes(v.toLowerCase())?'flex':'none'})}
-setTimeout(()=>{let s=document.getElementById('splash');if(s){s.style.opacity=0;setTimeout(()=>s.remove(),800)}},2500);
+
+function showPageByName(page){
+
+    const buttons=document.querySelectorAll(".nav button");
+
+    buttons.forEach(function(button){
+
+        if(button.getAttribute("onclick") &&
+           button.getAttribute("onclick").includes("'" + page + "'")){
+
+            showPage(page,button);
+
+        }
+
+    });
+
+}
+
+
+/* ================= MOBILE SIDEBAR ================= */
+
+function toggleSidebar(){
+
+    document.getElementById("sidebar").classList.toggle("open");
+
+}
+
+
+/* ================= NOTIFICATION ================= */
+
+function notify(){
+
+    alert("🔔 You are all caught up!\n\nNo new notifications.");
+
+}
+
+
+/* ================= THEME ================= */
+
+function toggleTheme(){
+
+    const root=document.documentElement;
+
+    if(root.dataset.theme==="light"){
+
+        root.dataset.theme="dark";
+
+        document.body.style.background="#070707";
+        document.body.style.color="#fff";
+
+    }else{
+
+        root.dataset.theme="light";
+
+        document.body.style.background="#eeeeee";
+        document.body.style.color="#111";
+
+        alert("Light mode preview enabled.\nRefresh the page to return to the premium dark theme.");
+
+    }
+
+}
+
+
+/* ================= KEYBOARD SHORTCUT ================= */
+
+document.addEventListener("keydown",function(e){
+
+    if(e.key==="Escape"){
+        document.getElementById("sidebar").classList.remove("open");
+    }
+
+});
+
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js")
+            .then(() => {
+                console.log("LEO CLUB App Ready");
+            })
+            .catch(error => {
+                console.error("Service Worker Error:", error);
+            });
+    });
+}
+
+
 </script>
+
 </body>
 </html>
+```
